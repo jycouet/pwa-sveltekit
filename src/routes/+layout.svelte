@@ -18,8 +18,10 @@
 		<a href="/about">About</a>
 	</div>
 	<div>
-		<a href="/sync">Sync {$objToSyncStore.length}</a>
-		|
+		{#if $objToSyncStore.length > 0}
+			<a href="/sync">Need to Sync: {$objToSyncStore.length}</a>
+			|
+		{/if}
 		<!-- TODO PWA state -->
 		Offline / Need to update / Online & Sync
 	</div>
