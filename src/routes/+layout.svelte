@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { objToSyncStore } from '$lib/objToSyncStore';
 </script>
 
 <svelte:head>
@@ -17,7 +18,10 @@
 		<a href="/about">About</a>
 	</div>
 	<div>
-		<div>Offline / Need to update / Online & Sync</div>
+		<a href="/sync">Sync {$objToSyncStore.length}</a>
+		|
+		<!-- TODO PWA state -->
+		Offline / Need to update / Online & Sync
 	</div>
 </div>
 
