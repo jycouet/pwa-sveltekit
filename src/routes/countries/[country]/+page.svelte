@@ -1,15 +1,24 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import { get, set } from '$lib/idb';
 	import { objToSyncStore } from '$lib/objToSyncStore';
 	import { onMount } from 'svelte';
 
 	let info: Record<string, any> = {};
 
 	onMount(async () => {
+		const key = `country - ${$page.params.country}`;
+		const cachedData = await get(key);
+		if (cachedData) {
+			info = cachedData;
+			return;
+		}
+
 		// TODO if offline, get from cache first. if there is nothing and we are offline... Display that we don't have data
 		const res = await fetch(`https://restcountries.com/v3.1/name/${$page.params.country}`);
 		const data = await res.json();
 		info = data;
+		set(key, info);
 	});
 
 	const visit = (visit: boolean) => () => {

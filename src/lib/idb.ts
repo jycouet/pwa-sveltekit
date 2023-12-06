@@ -14,7 +14,7 @@ const databases: IDBOpenDBRequest[] = [];
 
 function createStore(): UseStore {
 	const request = indexedDB.open('pwa-store');
-	const storeName = 'default-store';
+	const storeName = 'incoming-data';
 	databases.push(request);
 	request.onupgradeneeded = () => request.result.createObjectStore(storeName);
 	const dbp = promisifyRequest(request);
@@ -48,6 +48,14 @@ export function del(key: IDBValidKey) {
 export function closeDatabases() {
 	databases.forEach((db) => {
 		if (db.result) db.result.close();
+	});
+	defaultGetStoreFunc = undefined;
+}
+
+export function deleteDatabases() {
+	databases.forEach((db) => {
+		if (db.result) db.result.close();
+		indexedDB.deleteDatabase(db.result.name);
 	});
 	defaultGetStoreFunc = undefined;
 }
