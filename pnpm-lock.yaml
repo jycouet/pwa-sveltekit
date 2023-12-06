@@ -68,10 +68,16 @@ devDependencies:
   vitest:
     specifier: ^0.32.2
     version: 0.32.4
+  workbox-cacheable-response:
+    specifier: ^7.0.0
+    version: 7.0.0
   workbox-precaching:
     specifier: ^7.0.0
     version: 7.0.0
   workbox-routing:
+    specifier: ^7.0.0
+    version: 7.0.0
+  workbox-strategies:
     specifier: ^7.0.0
     version: 7.0.0
   workbox-window:
