@@ -4,6 +4,7 @@
 	"private": true,
 	"packageManager": "pnpm@8.11.0",
 	"scripts": {
+		"prepare": "svelte-kit sync",
 		"dev": "vite dev",
 		"dev:pwa": "ENABLE_DEV_PWA=true vite dev",
 		"build": "vite build",
