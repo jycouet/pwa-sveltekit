@@ -11,18 +11,26 @@ import { NavigationRoute, registerRoute } from 'workbox-routing';
 
 declare let self: ServiceWorkerGlobalScope;
 
+// TODO: If you need to cache at Service Worker level, you can use this
+// const countryPagesCache = 'countries-pages';
+// self.addEventListener('install', (event) => {
+// 	event.waitUntil(
+// 		self.caches
+// 			.open(countryPagesCache)
+// 			.then(() => console.info(`Opened cache: ${countryPagesCache}`))
+// 	);
+// });
+
 self.addEventListener('message', (event) => {
 	if (event.data && event.data.type === 'SKIP_WAITING') self.skipWaiting();
 });
 
+const everyThing = /./;
+
 // self.__WB_MANIFEST is default injection point
-precacheAndRoute(self.__WB_MANIFEST);
+precacheAndRoute(self.__WB_MANIFEST, { ignoreURLParametersMatching: [everyThing] });
 
 // clean old assets
 cleanupOutdatedCaches();
 
-let allowlist: undefined | RegExp[];
-if (import.meta.env.DEV) allowlist = [/^\/$/];
-
-// to allow work offline
-registerRoute(new NavigationRoute(createHandlerBoundToURL('/'), { allowlist }));
+registerRoute(new NavigationRoute(createHandlerBoundToURL('/')));

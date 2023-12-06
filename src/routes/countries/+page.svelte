@@ -3,8 +3,10 @@
 	import { onMount } from 'svelte';
 
 	let list: { name: string }[] = [];
+	let info = '';
 
 	onMount(async () => {
+		// TODO => Make a store for this
 		const cachedData = await get('countries');
 		if (cachedData) {
 			list = cachedData;
@@ -12,15 +14,15 @@
 			return;
 		}
 
-		console.log(`fetching data`);
-
-		// TODO if offline, get from cache first.
-		const res = await fetch('https://restcountries.com/v3.1/all?dt=' + new Date().valueOf());
-		const data = await res.json();
-		console.log(`data`, data);
-
-		list = data.map((country: any) => ({ name: country.name.common }));
-		set('countries', list);
+		// I'M I online?
+		if (navigator.onLine) {
+			const res = await fetch('https://restcountries.com/v3.1/all');
+			const data = await res.json();
+			list = data.map((country: any) => ({ name: country.name.common }));
+			set('countries', list);
+		} else {
+			info = `Not online, and I don't have data in cachedData, sorry!`;
+		}
 	});
 </script>
 
@@ -39,8 +41,11 @@
 	<ul>
 		{#each list as country}
 			<li>
-				<a href="/countries/{country.name}">{country.name}</a>
+				<a href="/countries/country?country={country.name}">{country.name}</a>
 			</li>
 		{/each}
+		{#if info}
+			<p>{info}</p>
+		{/if}
 	</ul>
 </div>

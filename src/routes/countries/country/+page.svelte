@@ -6,19 +6,33 @@
 
 	let info: Record<string, any> = {};
 
+	const getSpCountry = () => {
+		const spCountry = $page.url.searchParams.get('country');
+		return spCountry;
+		// const spCountry = window.location.search.replace('?country=', '');
+		// return spCountry;
+	};
+
 	onMount(async () => {
-		const key = `country - ${$page.params.country}`;
+		// TODO => Make a store for this
+		// loading... / Data from cache / Data from API / No Data
+
+		const key = `country - ${getSpCountry()}`;
 		const cachedData = await get(key);
 		if (cachedData) {
 			info = cachedData;
 			return;
 		}
 
-		// TODO if offline, get from cache first. if there is nothing and we are offline... Display that we don't have data
-		const res = await fetch(`https://restcountries.com/v3.1/name/${$page.params.country}`);
-		const data = await res.json();
-		info = data;
-		set(key, info);
+		// I'M I online?
+		if (navigator.onLine) {
+			const res = await fetch(`https://restcountries.com/v3.1/name/${getSpCountry()}`);
+			const data = await res.json();
+			info = data;
+			set(key, info);
+		} else {
+			info = { info: `Not online, and I don't have data in cachedData, sorry!` };
+		}
 	});
 
 	const visit = (visit: boolean) => () => {
@@ -27,7 +41,7 @@
 			date: new Date(),
 			info: {
 				visit,
-				country: $page.params.country
+				country: getSpCountry()
 			}
 		};
 		$objToSyncStore = [...$objToSyncStore, obj];
@@ -37,7 +51,7 @@
 	};
 </script>
 
-<h2>Country {$page.params.country}</h2>
+<h2>Country</h2>
 
 <button on:click={visit(true)}>Visit</button>
 <button on:click={visit(false)}>Skip</button>

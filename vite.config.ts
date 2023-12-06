@@ -2,22 +2,29 @@ import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vitest/config';
 import { SvelteKitPWA } from '@vite-pwa/sveltekit';
 
+const localDevBuild =
+	process.env.NODE_ENV === 'production' && process.env.ENABLE_DEV_PWA !== 'true';
+
 // in ms seconds
-const periodiSwUpdates =
-	process.env.NODE_ENV === 'production'
-		? 60 * 60 * 1000 // 1 hour
-		: 20000; // 20 seconds
+const periodicSwUpdates = localDevBuild
+	? 60 * 60 * 1000 // 1 hour
+	: 20000; // 20 seconds
+
+// enable workbox debug logs when using build + preview
+const mode = localDevBuild ? '"production"' : '"development"';
 
 export default defineConfig({
+	mode,
 	define: {
-		__RELOAD_SW__: `${periodiSwUpdates}`,
-		'process.env.NODE_ENV': process.env.NODE_ENV === 'production' ? '"production"' : '"development"'
+		__RELOAD_SW__: `${periodicSwUpdates}`,
+		'process.env.NODE_ENV': `${mode}`
 	},
 	plugins: [
 		sveltekit(),
 		SvelteKitPWA({
 			injectRegister: false,
 			strategies: 'injectManifest',
+			base: '/',
 			scope: '/',
 			srcDir: 'src',
 			filename: 'service-worker.ts',
