@@ -15,7 +15,7 @@
 		console.log(`fetching data`);
 
 		// TODO if offline, get from cache first.
-		const res = await fetch('https://restcountries.com/v3.1/all');
+		const res = await fetch('https://restcountries.com/v3.1/all?dt=' + new Date().valueOf());
 		const data = await res.json();
 		console.log(`data`, data);
 
