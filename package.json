@@ -21,6 +21,7 @@
 		"@typescript-eslint/eslint-plugin": "^6.0.0",
 		"@typescript-eslint/parser": "^6.0.0",
 		"@vite-pwa/assets-generator": "^0.0.11",
+		"@vite-pwa/sveltekit": "^0.2.8",
 		"eslint": "^8.28.0",
 		"eslint-config-prettier": "^9.0.0",
 		"eslint-plugin-svelte": "^2.30.0",
