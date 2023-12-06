@@ -1,4 +1,4 @@
-export const prerender = 'auto';
+// export const prerender = 'auto';
 /*
 import type { EntryGenerator } from './$types';
 

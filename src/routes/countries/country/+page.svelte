@@ -7,7 +7,9 @@
 	let info: Record<string, any> = {};
 
 	onMount(async () => {
-		const key = `country - ${$page.params.country}`;
+		const c = window.location.search.replace('?country=', '');
+
+		const key = `country - ${c}`;
 		const cachedData = await get(key);
 		if (cachedData) {
 			info = cachedData;
@@ -15,19 +17,20 @@
 		}
 
 		// TODO if offline, get from cache first. if there is nothing and we are offline... Display that we don't have data
-		const res = await fetch(`https://restcountries.com/v3.1/name/${$page.params.country}`);
+		const res = await fetch(`https://restcountries.com/v3.1/name/${c}`);
 		const data = await res.json();
 		info = data;
 		set(key, info);
 	});
 
 	const visit = (visit: boolean) => () => {
+		const c = window.location.search.replace('?country=', '');
 		const obj = {
 			id: (Math.random() + 1).toString(36).substring(2),
 			date: new Date(),
 			info: {
 				visit,
-				country: $page.params.country
+				country: c
 			}
 		};
 		$objToSyncStore = [...$objToSyncStore, obj];
@@ -37,7 +40,7 @@
 	};
 </script>
 
-<h2>Country {$page.params.country}</h2>
+<h2>Country</h2>
 
 <button on:click={visit(true)}>Visit</button>
 <button on:click={visit(false)}>Skip</button>

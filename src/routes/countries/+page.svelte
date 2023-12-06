@@ -39,7 +39,7 @@
 	<ul>
 		{#each list as country}
 			<li>
-				<a href="/countries/{country.name}">{country.name}</a>
+				<a href="/countries/country?country={country.name}">{country.name}</a>
 			</li>
 		{/each}
 	</ul>
