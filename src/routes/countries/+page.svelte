@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { set } from '$lib/idb';
 	import { onMount } from 'svelte';
 
 	let list: { name: string }[] = [];
@@ -8,6 +9,7 @@
 		const res = await fetch('https://restcountries.com/v3.1/all');
 		const data = await res.json();
 		list = data.map((country: any) => ({ name: country.name.common }));
+		set('countries', list);
 	});
 </script>
 
