@@ -54,9 +54,18 @@ export default defineConfig({
 						purpose: 'maskable'
 					}
 				]
+			},
+			devOptions: {
+				enabled: process.env.ENABLE_DEV_PWA === 'true',
+				suppressWarnings: true,
+				navigateFallback: '/',
+				type: 'module'
 			}
 		})
 	],
+	optimizeDeps: {
+		include: ['workbox-precaching', 'workbox-routing', 'workbox-window']
+	},
 	test: {
 		include: ['src/**/*.{test,spec}.{js,ts}']
 	}
