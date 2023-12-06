@@ -6,31 +6,42 @@
 
 	let info: Record<string, any> = {};
 
-	onMount(async () => {
-		const c = window.location.search.replace('?country=', '');
+	const getSpCountry = () => {
+		const spCountry = $page.url.searchParams.get('country');
+		return spCountry;
+		// const spCountry = window.location.search.replace('?country=', '');
+		// return spCountry;
+	};
 
-		const key = `country - ${c}`;
+	onMount(async () => {
+		// TODO => Make a store for this
+		// loading... / Data from cache / Data from API / No Data
+
+		const key = `country - ${getSpCountry()}`;
 		const cachedData = await get(key);
 		if (cachedData) {
 			info = cachedData;
 			return;
 		}
 
-		// TODO if offline, get from cache first. if there is nothing and we are offline... Display that we don't have data
-		const res = await fetch(`https://restcountries.com/v3.1/name/${c}`);
-		const data = await res.json();
-		info = data;
-		set(key, info);
+		// I'M I online?
+		if (navigator.onLine) {
+			const res = await fetch(`https://restcountries.com/v3.1/name/${getSpCountry()}`);
+			const data = await res.json();
+			info = data;
+			set(key, info);
+		} else {
+			info = { info: `Not online, and I don't have data in cachedData, sorry!` };
+		}
 	});
 
 	const visit = (visit: boolean) => () => {
-		const c = window.location.search.replace('?country=', '');
 		const obj = {
 			id: (Math.random() + 1).toString(36).substring(2),
 			date: new Date(),
 			info: {
 				visit,
-				country: c
+				country: getSpCountry()
 			}
 		};
 		$objToSyncStore = [...$objToSyncStore, obj];
