@@ -8,12 +8,17 @@
 		const cachedData = await get('countries');
 		if (cachedData) {
 			list = cachedData;
+			console.log(`cachedData`, cachedData);
 			return;
 		}
+
+		console.log(`fetching data`);
 
 		// TODO if offline, get from cache first.
 		const res = await fetch('https://restcountries.com/v3.1/all');
 		const data = await res.json();
+		console.log(`data`, data);
+
 		list = data.map((country: any) => ({ name: country.name.common }));
 		set('countries', list);
 	});
