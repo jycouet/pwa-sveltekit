@@ -14,15 +14,15 @@
 			return;
 		}
 
-		// I'M I online?
-		if (navigator.onLine) {
-			const res = await fetch('https://restcountries.com/v3.1/all');
-			const data = await res.json();
-			list = data.map((country: any) => ({ name: country.name.common }));
-			set('countries', list);
-		} else {
-			info = `Not online, and I don't have data in cachedData, sorry!`;
-		}
+		console.log(`fetching data`);
+
+		// TODO if offline, get from cache first.
+		const res = await fetch('https://restcountries.com/v3.1/all');
+		const data = await res.json();
+		console.log(`data`, data);
+
+		list = data.map((country: any) => ({ name: country.name.common }));
+		set('countries', list);
 	});
 </script>
 
