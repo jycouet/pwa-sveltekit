@@ -5,6 +5,10 @@
 <svelte:head>
 	<title>PWA SvelteKit</title>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css" />
+
+	<link rel="icon" href="/favicon.png" sizes="any" />
+	<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+	<link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png" />
 </svelte:head>
 
 <h1>PWA SvelteKit</h1>
