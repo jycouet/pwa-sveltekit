@@ -62,6 +62,9 @@ export default defineConfig({
 					}
 				]
 			},
+			injectManifest: {
+				globPatterns: ['client/**/*.{js,css,html,svg,png,json,ico}']
+			},
 			devOptions: {
 				enabled: process.env.ENABLE_DEV_PWA === 'true',
 				suppressWarnings: true,
