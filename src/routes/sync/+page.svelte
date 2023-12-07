@@ -13,8 +13,10 @@
 
 <button on:click={sync}>Sync All</button>
 
-{#each $visits as obj}
-	<div>
-		<pre>{JSON.stringify(obj, null, 2)}</pre>
-	</div>
-{/each}
+<ul>
+	{#each $visits as obj}
+		<li>
+			<pre>I want to {obj.data.visit ? 'Visit' : 'Skip'} {obj.idApp}   </pre>
+		</li>
+	{/each}
+</ul>

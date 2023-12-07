@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { pullDataStore } from '$lib/internal/pullDataStore';
-	import { visits } from '$lib/visitsStore';
+	import { currentVisitStore, visits } from '$lib/visitsStore';
 	import { onMount } from 'svelte';
 
 	const getCountry = () => {
@@ -14,15 +14,21 @@
 		{ name: { common: getCountry() } }
 	);
 
+	const currentVisit = currentVisitStore(getCountry());
+
 	onMount(async () => {
 		await countryStore.pull();
 	});
 
-	const visit = (visit: boolean) => () => {
+	const addVisit = (visit: boolean) => () => {
 		visits.push(getCountry(), {
 			visit,
 			country: getCountry()
 		});
+	};
+
+	const resetVisit = () => () => {
+		visits.remove(getCountry());
 	};
 </script>
 
@@ -30,8 +36,12 @@
 
 <h3>Do you want to</h3>
 <div>
-	<button on:click={visit(true)}>Visit</button>
-	<button on:click={visit(false)}>Skip</button>
+	<button on:click={addVisit(true)} disabled={$currentVisit !== undefined}>Visit</button>
+	<button on:click={addVisit(false)} disabled={$currentVisit !== undefined}>Skip</button>
+	<button on:click={resetVisit()} disabled={$currentVisit === undefined}>Reset</button>
+	{#if $currentVisit}
+		(current whish is: {$currentVisit?.data.visit ? 'Visit' : 'Skip'})
+	{/if}
 </div>
 
 <h3>Info</h3>

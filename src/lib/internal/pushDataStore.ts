@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store';
 import { delIdb, getIdb, setIdb, updateIdb } from './idb';
 
-type PushDataStore<T = any> = {
+export type PushDataStore<T = any> = {
 	idGenerated: string;
 	date: Date;
 	idApp: string;
@@ -30,7 +30,8 @@ export const pushDataStore = <T = any | undefined>(name: string) => {
 			let vals = await getIdb(idbKey);
 			if (vals) {
 				updateIdb(idbKey, (old) => {
-					return [...old, obj];
+					const filtered = old.filter((o: { idApp: string }) => o.idApp !== idApp);
+					return [...filtered, obj];
 				});
 			} else {
 				setIdb(idbKey, [obj]);
@@ -55,6 +56,18 @@ export const pushDataStore = <T = any | undefined>(name: string) => {
 			} else {
 				console.log(`offline, we can't sync`);
 			}
+		},
+		remove: async <T>(idApp: string) => {
+			let vals = await getIdb(idbKey);
+			if (vals) {
+				updateIdb(idbKey, (old) => {
+					const filtered = old.filter((o: { idApp: string }) => o.idApp !== idApp);
+					return [...filtered];
+				});
+			}
+
+			vals = await getIdb(idbKey);
+			set(vals);
 		}
 	};
 };
