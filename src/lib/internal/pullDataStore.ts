@@ -1,5 +1,6 @@
-import { writable } from 'svelte/store';
+import { get, writable } from 'svelte/store';
 import { getIdb, setIdb } from './idb';
+import { isOnline } from './isOnline';
 
 type PullDataStore<T = any> = {
 	state: 'loading' | 'loaded from network' | 'loaded from cache' | 'no cached data & offline';
@@ -29,7 +30,7 @@ export const pullDataStore = <T = any | undefined>(url: string, initData: T) => 
 			}
 
 			// If we are online, let's refresh the data as well
-			if (navigator && navigator.onLine) {
+			if (get(isOnline)) {
 				const res = await fetch(url);
 				const data = await res.json();
 				update((c) => {
@@ -38,7 +39,7 @@ export const pullDataStore = <T = any | undefined>(url: string, initData: T) => 
 				setIdb(idbKey, data);
 			}
 
-			if (!navigator.onLine && !cachedData) {
+			if (!get(isOnline) && !cachedData) {
 				update((c) => {
 					return { ...c, state: 'no cached data & offline' };
 				});

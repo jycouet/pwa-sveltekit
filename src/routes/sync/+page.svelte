@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { isOnline } from '$lib/internal/isOnline';
 	import { visits } from '$lib/visitsStore';
 
 	const sync = () => {
@@ -11,8 +12,10 @@
 
 <h2>Sync view</h2>
 
-<button on:click={sync}>Sync All</button>
-
+<button on:click={sync} disabled={!$isOnline}>Sync All</button>
+{#if !$isOnline}
+	<i>Can't synchronize while offline</i>
+{/if}
 <ul>
 	{#each $visits as obj}
 		<li>

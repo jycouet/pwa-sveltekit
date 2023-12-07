@@ -1,5 +1,6 @@
-import { writable } from 'svelte/store';
+import { get, writable } from 'svelte/store';
 import { delIdb, getIdb, setIdb, updateIdb } from './idb';
+import { isOnline } from './isOnline';
 
 export type PushDataStore<T = any> = {
 	idGenerated: string;
@@ -41,7 +42,7 @@ export const pushDataStore = <T = any | undefined>(name: string) => {
 			set(vals);
 		},
 		sync: async (fnToSync: (fnToSync: PushDataStore<T>) => void) => {
-			if (navigator && navigator.onLine) {
+			if (get(isOnline)) {
 				const vals = await getIdb(idbKey);
 				if (!vals) {
 					console.log(`Nothing to sync`);
