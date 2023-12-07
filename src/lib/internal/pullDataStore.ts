@@ -29,7 +29,7 @@ export const pullDataStore = <T = any | undefined>(url: string, initData: T) => 
 			}
 
 			// If we are online, let's refresh the data as well
-			if (navigator.onLine) {
+			if (navigator && navigator.onLine) {
 				const res = await fetch(url);
 				const data = await res.json();
 				update((c) => {

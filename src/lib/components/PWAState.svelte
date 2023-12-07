@@ -30,7 +30,7 @@
 	});
 </script>
 
-{#if navigator.onLine}
+{#if navigator && navigator.onLine}
 	{#if $needRefresh}
 		Online (need update) 🔵
 	{:else}

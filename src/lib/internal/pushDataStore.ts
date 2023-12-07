@@ -38,7 +38,7 @@ export const pushDataStore = <T = any | undefined>(name: string) => {
 			set(vals);
 		},
 		sync: async (fnToSync: (fnToSync: PushDataStore<T>) => void) => {
-			if (navigator.onLine) {
+			if (navigator && navigator.onLine) {
 				const vals = await getIdb(key);
 				if (!vals) {
 					console.log(`Nothing to sync`);
