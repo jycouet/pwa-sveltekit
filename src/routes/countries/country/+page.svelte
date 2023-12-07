@@ -7,27 +7,19 @@
 	const getCountry = () => {
 		const country = $page.url.searchParams.get('country');
 		return country ?? '';
-
-		// if (window) {
-		// 	const spCountry = window.location.search.replace('?country=', '');
-		// 	return spCountry ?? '';
-		// }
-		// return '';
 	};
 
-	// TODO: create the store outside of the onMount. Today we can't because at build, SvelteKit is conplaining about the serach param
-	let countryStore: ReturnType<typeof pullDataStore>;
+	let countryStore = pullDataStore<{ name: { common: string } }>(
+		`https://restcountries.com/v3.1/name/${getCountry()}`,
+		{ name: { common: getCountry() } }
+	);
 
 	onMount(async () => {
-		countryStore = pullDataStore<{ name: { common: string } }>(
-			`https://restcountries.com/v3.1/name/${getCountry()}`,
-			{ name: { common: getCountry() } }
-		);
 		await countryStore.pull();
 	});
 
 	const visit = (visit: boolean) => () => {
-		visits.push({
+		visits.push(getCountry(), {
 			visit,
 			country: getCountry()
 		});
@@ -36,9 +28,11 @@
 
 <h2>Country</h2>
 
-<h3>Action</h3>
-<button on:click={visit(true)}>Visit</button>
-<button on:click={visit(false)}>Skip</button>
+<h3>Do you want to</h3>
+<div>
+	<button on:click={visit(true)}>Visit</button>
+	<button on:click={visit(false)}>Skip</button>
+</div>
 
 <h3>Info</h3>
 

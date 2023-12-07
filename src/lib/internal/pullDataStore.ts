@@ -19,9 +19,9 @@ export const pullDataStore = <T = any | undefined>(url: string, initData: T) => 
 	return {
 		subscribe,
 		pull: async () => {
-			const key = `PULL ${url}`;
+			const idbKey = `PULL ${url}`;
 
-			const cachedData = await getIdb(key);
+			const cachedData = await getIdb(idbKey);
 			if (cachedData) {
 				update((c) => {
 					return { ...c, data: cachedData, state: 'loaded from cache' };
@@ -35,7 +35,7 @@ export const pullDataStore = <T = any | undefined>(url: string, initData: T) => 
 				update((c) => {
 					return { ...c, data: data, state: 'loaded from network' };
 				});
-				setIdb(key, data);
+				setIdb(idbKey, data);
 			}
 
 			if (!navigator.onLine && !cachedData) {
