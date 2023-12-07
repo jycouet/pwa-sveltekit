@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { pullDataStore } from '$lib/pullDataStore';
+	import { pullDataStore } from '$lib/internal/pullDataStore';
 	import { onMount } from 'svelte';
 
 	let countriesStore = pullDataStore<{ name: { common: string } }[]>(

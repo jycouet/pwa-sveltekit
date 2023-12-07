@@ -1,3 +1,3 @@
-import { pushDataStore } from './pushDataStore';
+import { pushDataStore } from './internal/pushDataStore';
 
 export const visits = pushDataStore('visits');

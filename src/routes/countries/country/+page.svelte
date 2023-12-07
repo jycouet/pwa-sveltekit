@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { pullDataStore } from '$lib/pullDataStore';
+	import { pullDataStore } from '$lib/internal/pullDataStore';
 	import { visits } from '$lib/visitsStore';
 	import { onMount } from 'svelte';
 
