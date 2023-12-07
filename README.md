@@ -1,5 +1,7 @@
 # PWA - SvelteKit
 
+test: https://pwa-sveltekit.onrender.com/
+
 What can you find here?
 
 ## Notes to organize
