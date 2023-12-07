@@ -4,28 +4,32 @@
 	import { visits } from '$lib/visitsStore';
 	import { onMount } from 'svelte';
 
-	let info: Record<string, any> = {};
-
-	const country = () => {
+	const getCountry = () => {
 		const country = $page.url.searchParams.get('country');
 		return country ?? '';
-		// const spCountry = window.location.search.replace('?country=', '');
-		// return spCountry;
+
+		// if (window) {
+		// 	const spCountry = window.location.search.replace('?country=', '');
+		// 	return spCountry ?? '';
+		// }
+		// return '';
 	};
 
-	let countryStore = pullDataStore<{ name: { common: string } }>(
-		`https://restcountries.com/v3.1/name/${country()}`,
-		{ name: { common: country() } }
-	);
+	// TODO: create the store outside of the onMount. Today we can't because at build, SvelteKit is conplaining about the serach param
+	let countryStore: ReturnType<typeof pullDataStore>;
 
 	onMount(async () => {
+		countryStore = pullDataStore<{ name: { common: string } }>(
+			`https://restcountries.com/v3.1/name/${getCountry()}`,
+			{ name: { common: getCountry() } }
+		);
 		await countryStore.pull();
 	});
 
 	const visit = (visit: boolean) => () => {
 		visits.push({
 			visit,
-			country: country()
+			country: getCountry()
 		});
 	};
 </script>
@@ -38,11 +42,13 @@
 
 <h3>Info</h3>
 
-{#if $countryStore.state === 'loading'}
-	<p>Loading...</p>
-{:else if $countryStore.state === 'no cached data & offline'}
-	<p>Go online to get data</p>
-{:else}
-	<em>Info: {$countryStore.state}</em>
-	<pre>{JSON.stringify($countryStore.data, null, 2)}</pre>
+{#if countryStore}
+	{#if $countryStore.state === 'loading'}
+		<p>Loading...</p>
+	{:else if $countryStore.state === 'no cached data & offline'}
+		<p>Go online to get data</p>
+	{:else}
+		<em>Info: {$countryStore.state}</em>
+		<pre>{JSON.stringify($countryStore.data, null, 2)}</pre>
+	{/if}
 {/if}

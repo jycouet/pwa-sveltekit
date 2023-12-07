@@ -1,4 +1,5 @@
 <script lang="ts">
+	import PwaState from '$lib/components/PWAState.svelte';
 	import { visits } from '$lib/visitsStore';
 	import { onMount } from 'svelte';
 	import { pwaInfo } from 'virtual:pwa-info';
@@ -18,6 +19,7 @@
 	<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 	<link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png" />
 	<meta name="theme-color" content="#ffffff" />
+
 	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 	{@html webManifest}
 </svelte:head>
@@ -37,8 +39,7 @@
 			<a href="/sync">Need to Sync: {$visits.length}</a>
 			|
 		{/if}
-		<!-- TODO PWA state -->
-		Offline / Need to update / Online & Sync
+		<PwaState></PwaState>
 	</div>
 </div>
 
