@@ -1,10 +1,11 @@
-<script>
-	import { objToSyncStore } from '$lib/objToSyncStore';
+<script lang="ts">
+	import { visits } from '$lib/visitsStore';
 
 	const sync = () => {
-		// TODO if offline don't do it. (button disabled)
-		console.log($objToSyncStore);
-		$objToSyncStore = [];
+		visits.sync((e) => {
+			// TODO send to the server...
+			console.log(`To SYNC somewhere`, e);
+		});
 	};
 </script>
 
@@ -12,7 +13,7 @@
 
 <button on:click={sync}>Sync All</button>
 
-{#each $objToSyncStore as obj}
+{#each $visits as obj}
 	<div>
 		<pre>{JSON.stringify(obj, null, 2)}</pre>
 	</div>

@@ -1,8 +1,13 @@
 <script lang="ts">
-	import { objToSyncStore } from '$lib/objToSyncStore';
+	import { visits } from '$lib/visitsStore';
+	import { onMount } from 'svelte';
 	import { pwaInfo } from 'virtual:pwa-info';
 
-	$: webManifest = pwaInfo ? pwaInfo.webManifest.linkTag : ''
+	$: webManifest = pwaInfo ? pwaInfo.webManifest.linkTag : '';
+
+	onMount(() => {
+		visits.init();
+	});
 </script>
 
 <svelte:head>
@@ -12,7 +17,7 @@
 	<link rel="icon" href="/favicon.png" sizes="any" />
 	<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 	<link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png" />
-	<meta name="theme-color" content="#ffffff">
+	<meta name="theme-color" content="#ffffff" />
 	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 	{@html webManifest}
 </svelte:head>
@@ -28,8 +33,8 @@
 		<a href="/about">About</a>
 	</div>
 	<div>
-		{#if $objToSyncStore.length > 0}
-			<a href="/sync">Need to Sync: {$objToSyncStore.length}</a>
+		{#if $visits.length > 0}
+			<a href="/sync">Need to Sync: {$visits.length}</a>
 			|
 		{/if}
 		<!-- TODO PWA state -->
