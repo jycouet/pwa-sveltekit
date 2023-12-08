@@ -24,8 +24,8 @@ devDependencies:
     specifier: ^0.0.11
     version: 0.0.11
   '@vite-pwa/sveltekit':
-    specifier: ^0.2.9
-    version: 0.2.9(@sveltejs/kit@1.27.7)(vite-plugin-pwa@0.16.7)
+    specifier: ^0.2.10
+    version: 0.2.10(@sveltejs/kit@1.27.7)(vite-plugin-pwa@0.16.7)
   eslint:
     specifier: ^8.28.0
     version: 8.55.0
@@ -1952,8 +1952,8 @@ packages:
       unconfig: 0.3.11
     dev: true
 
-  /@vite-pwa/sveltekit@0.2.9(@sveltejs/kit@1.27.7)(vite-plugin-pwa@0.16.7):
-    resolution: {integrity: sha512-O/aH/0fj0r5D3+w2P5jrRzp1RcqoQeWJ/GXvaSvuv57KdGS/yO5eOkzsE60r/pLySVcwOtvwgKaseWS9Ct8uaA==}
+  /@vite-pwa/sveltekit@0.2.10(@sveltejs/kit@1.27.7)(vite-plugin-pwa@0.16.7):
+    resolution: {integrity: sha512-58acO/8vL7tVqBNH6IZnB34b2TLco39AF3wN41FEevrxUoM9BNY5VNZAKG2va4LPnzbeB8svSKhZjYGZ34aJQQ==}
     engines: {node: '>=16.14 || >=18'}
     peerDependencies:
       '@sveltejs/kit': ^1.3.1

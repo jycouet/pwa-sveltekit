@@ -62,6 +62,13 @@ export default defineConfig({
 					}
 				]
 			},
+			// in case you need to include some other file extensions, remember to add client/ prefix
+			// injectManifest: {
+			// 	globPatterns: ['client/**/*.{js,css,html,svg,png,json,ico}']
+			// },
+			kit: {
+				includeVersionFile: true
+			},
 			devOptions: {
 				enabled: process.env.ENABLE_DEV_PWA === 'true',
 				suppressWarnings: true,
