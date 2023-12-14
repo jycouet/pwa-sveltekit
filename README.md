@@ -1,26 +1,49 @@
 # PWA - SvelteKit
 
-test: https://pwa-sveltekit.onrender.com/
+Getting started with PWA in SvelteKit.
 
-What can you find here?
+## 🌍 Check it out live
 
-## Notes to organize
+- https://pwa-sveltekit.onrender.com/
 
-- [ ] Deploy to render as a static site
-- [ ] script prepare => sync
-- [ ] PWA (list deps)
-- [ ] Explain scripts
-  - [ ] To test offline features, you have to `pnpm build && pnpm preview`, we recommend to use a brwoser in ingognito mode to avoid installing service workers in your browser for ever.
-- [ ] Explain UseCases of the demo
+## 🚀 Quick start
 
-## TODO
+```bash
+npm i
+npm run dev
+```
 
-- [ ] test: +layout.ts with prerender: 'auto'
-- [ ] fix color of PWAPrompt.svelte
+## 📚 Demo ?
 
-## Note
+Online, I can:
 
-1. To delete all service workers in your browser, open the console int the page chrome://serviceworker-internals/?devtools and run:
+- list countries
+- go a a country page
+- build a list of countries I want to visit or skip
+
+Offine, I can:
+
+- list countries (if you saw the list before)
+- go a a country page (if you saw the country before)
+- build a list of countries I want to visit or skip
+
+When you go back online, you can sync your list with the server.
+
+## 💡 Tips
+
+### Default port for PWA
+
+Don't use the default port of SvelteKit, to not have a service workers on this default port that will mess with your other projects!
+
+### Deploy
+
+You can check the deployment configuration in the file [render.yaml](./render.yaml).
+
+Go to render, and add a blueprint pointing at your repo, and that's it!
+
+### Clean ALL Service Workers
+
+1. To delete all service workers in your browser, open the console int the page [chrome://serviceworker-internals/?devtools](chrome://serviceworker-internals/?devtools) and run:
 
 ```js
 document.querySelectorAll('.unregister').forEach((item) => item.click());
